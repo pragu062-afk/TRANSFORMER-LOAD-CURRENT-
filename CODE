@@ -1,0 +1,24 @@
+clc;
+clear;
+close all;
+
+% Transformer parameters (real world)
+V_secondary = 415;      % Volts (3-phase LT side)
+power_factor = 0.85;   % typical industrial PF
+
+% Simulated real-time load power in kW (varies with time)
+time = 0:1:60;   % 1 minute data (seconds)
+
+P_kW = 40 + 20*sin(0.1*time) + 10*rand(1,length(time));
+P = P_kW * 1000;   % convert to watts
+
+% Load current calculation
+I_load = P ./ (sqrt(3)*V_secondary*power_factor);
+
+% Plot current variation
+figure;
+plot(time, I_load, 'LineWidth', 2);
+xlabel('Time (seconds)');
+ylabel('Load Current (Amps)');
+title('Real-Time Transformer Load Current Variation');
+grid on;
